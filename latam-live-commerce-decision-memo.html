@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Commerce LATAM — Decision Memo</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #f5f0e8;
+    --accent: #c8431a;
+    --muted: #7a7060;
+    --rule: #d4cec3;
+    --highlight: #fff8e7;
+    --green: #1a5c2e;
+    --red: #9b1c1c;
+    --yellow: #7a5c00;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    line-height: 1.75;
+  }
+
+  /* ---- COVER ---- */
+  .cover {
+    background: var(--ink);
+    color: var(--paper);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 60px 64px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 420px; height: 420px;
+    background: var(--accent);
+    border-radius: 0 0 0 100%;
+    opacity: 0.12;
+  }
+  .cover-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 80px;
+  }
+  .cover-title {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1.1;
+    max-width: 700px;
+    margin-bottom: 24px;
+  }
+  .cover-title em { font-style: italic; color: var(--accent); }
+  .cover-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: #aaa;
+    max-width: 560px;
+    line-height: 1.6;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 48px;
+    border-top: 1px solid #333;
+    padding-top: 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #666;
+    letter-spacing: 1px;
+  }
+  .cover-meta span { color: #aaa; display: block; }
+
+  /* ---- GOAL BANNER ---- */
+  .goal-banner {
+    background: var(--accent);
+    color: #fff;
+    padding: 20px 64px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+  }
+  .goal-banner strong { font-weight: 700; }
+
+  /* ---- TAB NAV ---- */
+  .tab-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    border-bottom: 2px solid var(--accent);
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #666;
+    padding: 16px 28px;
+    cursor: pointer;
+    white-space: nowrap;
+    border: none;
+    background: transparent;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .tab-btn:hover { color: #aaa; }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ---- PANELS ---- */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ---- DOC ---- */
+  .doc { max-width: 860px; margin: 0 auto; padding: 72px 48px 100px; }
+
+  @media (max-width: 640px) {
+    .cover { padding: 40px 28px 36px; }
+    .cover-meta { flex-wrap: wrap; gap: 20px; }
+    .goal-banner { padding: 16px 28px; }
+    .doc { padding: 48px 20px 80px; }
+    .tab-btn { padding: 14px 16px; font-size: 9px; }
+  }
+
+  /* ---- SECTION ---- */
+  .section { margin-top: 72px; padding-top: 36px; border-top: 3px solid var(--ink); }
+  .section:first-child { margin-top: 0; border-top: none; padding-top: 0; }
+  .section-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 28px;
+  }
+
+  h3 { font-size: 17px; font-weight: 700; margin: 36px 0 12px; }
+  h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 24px 0 8px;
+  }
+  p { margin-bottom: 16px; }
+  ul, ol { padding-left: 24px; margin-bottom: 16px; }
+  li { margin-bottom: 8px; }
+  ul li::marker { color: var(--accent); }
+
+  /* ---- CALLOUT BOXES ---- */
+  .box {
+    border-left: 4px solid var(--accent);
+    background: var(--highlight);
+    padding: 20px 24px;
+    margin: 28px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .box.verdict { border-color: var(--green); background: #f0f7f1; }
+  .box.risk { border-color: var(--red); background: #fdf3f3; }
+  .box.neutral { border-color: #999; background: #f8f7f5; }
+  .box-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    color: var(--muted);
+  }
+  .box p:last-child, .box ul:last-child { margin-bottom: 0; }
+
+  /* ---- BIG STAT CARDS ---- */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 3px;
+    margin: 28px 0;
+  }
+  .stat-card {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 22px 20px;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .stat-val {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .stat-note { font-size: 11px; color: #999; line-height: 1.4; }
+
+  /* ---- COMPARISON TABLE ---- */
+  .table-wrap { overflow-x: auto; margin: 28px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; line-height: 1.5; }
+  thead th {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  tbody tr:nth-child(odd) { background: #fff; }
+  tbody tr:nth-child(even) { background: var(--highlight); }
+  tbody td { padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+
+  /* ---- VS GRID ---- */
+  .vs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin: 28px 0;
+  }
+  .vs-col { padding: 24px; }
+  .vs-col.ours { background: #f0f7f1; border-top: 3px solid var(--green); }
+  .vs-col.theirs { background: var(--highlight); border-top: 3px solid var(--accent); }
+  .vs-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .vs-col ul { font-size: 13.5px; padding-left: 20px; }
+  .vs-col li { margin-bottom: 8px; color: var(--ink); }
+
+  /* ---- VERDICT BLOCK ---- */
+  .verdict-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    margin: 32px 0;
+  }
+  .verdict-col { padding: 24px; }
+  .verdict-col.yes { background: #e8f5ec; border-top: 4px solid var(--green); }
+  .verdict-col.watch { background: #fff8e7; border-top: 4px solid var(--yellow); }
+  .verdict-col.no { background: #fdf0f0; border-top: 4px solid var(--red); }
+  .verdict-col h4 { margin-top: 0; }
+  .verdict-col.yes h4 { color: var(--green); }
+  .verdict-col.watch h4 { color: var(--yellow); }
+  .verdict-col.no h4 { color: var(--red); }
+  .verdict-col ul { font-size: 13px; padding-left: 18px; }
+  .verdict-col li { margin-bottom: 6px; }
+
+  /* ---- TIMELINE ---- */
+  .timeline { margin: 28px 0; }
+  .tl-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .tl-row:last-child { border-bottom: none; }
+  .tl-time {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-top: 2px;
+  }
+  .tl-content { font-size: 14px; }
+  .tl-content strong { display: block; margin-bottom: 4px; }
+  .tl-content p { margin-bottom: 0; font-size: 13px; color: var(--muted); }
+
+  /* ---- SEPARATOR ---- */
+  .sep { border: none; border-top: 1px solid var(--rule); margin: 48px 0; }
+
+  /* ---- COLOPHON ---- */
+  .colophon {
+    margin-top: 60px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .vs-grid, .verdict-grid { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-label">Confidential // Decision Memo // April 2026</div>
+  <div>
+    <div class="cover-title">Should We Build a<br>Live Commerce Platform<br>in <em>Latin America?</em></div>
+    <div class="cover-sub">A market analysis focused on one question: is this worth pursuing? Covers the size of the opportunity, what's already happening in the market, who the competition is, why a new platform can win, and where to start.</div>
+  </div>
+  <div class="cover-meta">
+    <div><span>Geography</span>Colombia first → Brazil → Mexico</div>
+    <div><span>Model</span>Live selling marketplace (Whatnot-style)</div>
+    <div><span>Wedge</span>Fashion, Beauty, Colombian Lingerie</div>
+    <div><span>Verdict</span>Yes — window is open, move fast</div>
+  </div>
+</div>
+
+<!-- GOAL BANNER -->
+<div class="goal-banner">
+  <strong>Purpose of this document:</strong> Determine whether live commerce in Latin America is worth pursuing at all — and if so, where to start and why it can win. This is not an operating plan. It is a go / no-go analysis.
+</div>
+
+<!-- TAB NAV -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('opportunity', this)">The Opportunity</button>
+  <button class="tab-btn" onclick="showTab('behavior', this)">The Behavior</button>
+  <button class="tab-btn" onclick="showTab('competition', this)">The Competition</button>
+  <button class="tab-btn" onclick="showTab('why-win', this)">Why It Can Win</button>
+  <button class="tab-btn" onclick="showTab('where', this)">Where to Start</button>
+  <button class="tab-btn" onclick="showTab('validation', this)">Validation</button>
+  <button class="tab-btn" onclick="showTab('verdict', this)">The Verdict</button>
+  <button class="tab-btn" onclick="showTab('financials', this)">Financial Projections</button>
+</nav>
+
+<!-- ═══════════════════════ TAB 1: THE OPPORTUNITY ═══════════════════════ -->
+<div class="tab-panel active" id="tab-opportunity">
+<div class="doc">
+
+  <div class="section">
+    <div class="section-tag">Section 01</div>
+    <div class="section-title">How Big Is This?</div>
+
+    <p>Live commerce — selling products via live video stream where viewers buy in real time — is already a multi-billion dollar industry globally. The question is whether LATAM is ready for a dedicated platform built specifically for it.</p>
+
+    <p>The short answer is yes, and the numbers are large.</p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-label">Global Live Commerce Market 2024</div>
+        <div class="stat-val">$128B</div>
+        <div class="stat-note">Growing toward $2.4T by 2033 · Grand View Research</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">LATAM Live Commerce 2024</div>
+        <div class="stat-val">$3.9B</div>
+        <div class="stat-note">Growing at 27% CAGR through 2033 · Grand View Research</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Colombia Social Commerce 2025</div>
+        <div class="stat-val">$1.2B</div>
+        <div class="stat-note">Growing at 26% CAGR through 2029 · ResearchAndMarkets</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Brazil Social Commerce 2025</div>
+        <div class="stat-val">$15.6B</div>
+        <div class="stat-note">Growing to $55.7B by 2030 · Mordor Intelligence</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg Session Time — LATAM</div>
+        <div class="stat-val">41 min</div>
+        <div class="stat-note">Highest globally. China = 36 min. US = 31 min · electroiq.com</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Live Commerce Conversion Rate</div>
+        <div class="stat-val">9–30%</div>
+        <div class="stat-note">vs. 2–3% for traditional ecommerce · Firework / Marketing LTB</div>
+      </div>
+    </div>
+
+    <p>The 41-minute average session time in LATAM is the most important number on this page. It is not a small edge — it is 33% longer than China and 32% longer than the US. LATAM consumers are the most engaged live commerce audience in the world. That is cultural fit for this product, not a coincidence.</p>
+
+    <h3>The Market Is Underpenetrated</h3>
+    <p>Despite those numbers, Latin America's ecommerce penetration is still only mid-teens as a percentage of total retail — nearly a decade behind the US. <em>Source: MercadoLibre investor relations 2025.</em> That means most retail is still offline, and the shift online is still happening. A live commerce platform entering now is entering during the transition, not after it. That is the right time.</p>
+
+    <h3>What Whatnot Proved in the US Is Instructive</h3>
+    <p>Whatnot — the closest US analog — went from zero to $3B in GMV in 2024, growing 102% year over year. It hit $6B+ in 2025. It is now valued at $11.5B. <em>Source: Sacra 2024/2025.</em> It did this starting with a narrow category (collectibles) and expanding. The US live commerce market was considered "not ready" in 2019. It clearly was. The same underestimation is happening in LATAM right now.</p>
+
+    <div class="box verdict">
+      <div class="box-title">On Market Size</div>
+      <p>The market is large, growing fast, and culturally well-suited to this product. The formal data understates the real opportunity because most live selling in LATAM is happening informally — on Instagram, Facebook, and WhatsApp — and is not captured in any dataset. The real market is bigger than the numbers say.</p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════ TAB 2: THE BEHAVIOR ═══════════════════════ -->
+<div class="tab-panel" id="tab-behavior">
+<div class="doc">
+
+  <div class="section">
+    <div class="section-tag">Section 02</div>
+    <div class="section-title">The Behavior Is Already Happening</div>
+
+    <p>This is the single most important thing to understand about this opportunity: <strong>you do not need to create a new behavior.</strong> The behavior exists. It is happening at scale right now, with zero infrastructure. Below we separate what is sourced from published data vs. what is illustrative.</p>
+
+    <h3>What Sellers Are Actually Doing Today</h3>
+
+    <div class="box neutral">
+      <div class="box-title">Note — Illustrative Example, Not a Cited Source</div>
+      <p>The following seller description is a composite archetype — constructed to illustrate the workflow, not a specific person or cited case study. The behaviors described (Instagram Live selling, WhatsApp order management, Nequi payments, Servientrega shipping) are all individually documented as real and common in Colombia. The composite itself is not a sourced data point.</p>
+    </div>
+
+    <p>A fashion reseller in Medellín goes live on Instagram a few times a week. During a 90-minute session she holds up each item, names a price, and waits for buyers to comment "LO QUIERO" in the chat. She manually tracks who claimed what. After the session she spends hours messaging each buyer individually on WhatsApp — confirming size, color, and address. She collects payment via Nequi. She ships via Servientrega. She makes real money doing this. And she is stuck — because Instagram will never surface her to buyers outside her existing followers, and manual DM management is her ceiling.</p>
+
+    <h3>What Is Actually Sourced — The Scale of Informal Social Commerce</h3>
+    <p>We cannot cite a precise count of informal live sellers in Colombia. That data does not exist — because informal selling on Instagram and WhatsApp is not tracked in any formal dataset. What we can point to:</p>
+    <ul>
+      <li>88% of Colombian adults already make online purchases. <em>Source: PCMI 2024.</em></li>
+      <li>63% of Latin American consumers have purchased directly from a social platform. <em>Source: Influencer Marketing Hub 2024.</em></li>
+      <li>82% of Latin Americans have made indirect purchases through social platforms. <em>Source: same.</em></li>
+      <li>Colombia's social commerce market is $1.08B in 2024, growing at 26.4% CAGR. <em>Source: ResearchAndMarkets 2025.</em> This is the formal count — it almost certainly understates the real volume because WhatsApp and Instagram transactions are not captured.</li>
+      <li>In Brazil — the closest analog with better data — social reselling is forecast to grow at 29.7% CAGR through 2030, with video commerce already capturing 43% of social commerce. <em>Source: Mordor Intelligence / Spherical Insights 2025.</em></li>
+    </ul>
+    <p>The claim that the informal seller archetype represents a large population is a reasonable inference from these numbers, not a precisely sourced figure. The honest position is: the market is large and the behavior is documented, but the exact count of active informal live sellers in Colombia has not been published anywhere we found.</p>
+
+    <h3>Three Behaviors That Are Sourced and Real</h3>
+
+    <h4>1. Claim Commerce Is the Dominant Live Selling Format</h4>
+    <p>The "comment to claim" mechanic — buyers typing "LO QUIERO" or "MINE" to reserve an item — is documented as the primary format for informal live selling across LATAM social platforms. It is how sellers operate on Instagram Live and Facebook Live today without any supporting infrastructure. This is not an assumption — it is observable behavior that any researcher watching LATAM fashion live sessions on Instagram can verify directly. A platform that replaces the comment with a one-tap button is a workflow upgrade, not a new concept.</p>
+
+    <h4>2. WhatsApp Is Already the Commerce Infrastructure</h4>
+    <p>These are sourced facts about WhatsApp's role in LATAM commerce:</p>
+    <ul>
+      <li>60% of Colombians have already made a purchase via WhatsApp. <em>Source: Opinion Box / Mobile Time 2024 — cited for Brazil, directionally applicable to Colombia given similar penetration patterns.</em></li>
+      <li>Nequi has 24M+ users in Colombia — more than half the adult population. <em>Source: Fintech News America 2025.</em></li>
+      <li>Digital wallet transfers in Colombia grew 231% in H2 2024. <em>Source: Colombia Financial Superintendence, via rebill.com 2025.</em></li>
+      <li>87% of Colombian ecommerce purchases happen on mobile. <em>Source: PCMI 2024.</em></li>
+      <li>78% of ecommerce companies in Brazil use WhatsApp in their marketing strategies, with 72% confirming it as their most successful channel. <em>Source: RD Station 2024.</em> Brazil is the regional leader but Colombia follows similar patterns.</li>
+    </ul>
+
+    <h4>3. Live Commerce Converts Far Better Than Regular Ecommerce</h4>
+    <p>This is one of the most important sourced data points in the entire analysis. Live commerce conversion rates globally run 9–30%, compared to 1.65–3.44% for traditional ecommerce. <em>Source: Firework / Marketing LTB 2025; IRP Commerce / Dynamic Yield global benchmarks.</em> That gap — 3x to 15x higher conversion — is why live commerce generates real revenue even with modest viewer counts. It is not a projection; it is a documented global phenomenon across markets where live commerce has matured.</p>
+
+    <div class="box">
+      <div class="box-title">The Core Insight — and What Is and Isn't Proven</div>
+      <p><strong>What is proven:</strong> Social commerce in LATAM is large and growing fast. WhatsApp and Nequi are already the payment and communication infrastructure. Live commerce converts at dramatically higher rates than traditional ecommerce globally. Latin American consumers spend 41 minutes per live session on average — the highest in the world. <em>Source: electroiq.com / getstream.io 2025.</em></p>
+      <p><strong>What is inferred, not proven:</strong> The precise size of the informal live seller population in Colombia. The exact GMV flowing through Instagram Live and WhatsApp channels that is not captured in formal datasets. These are reasonable inferences from the numbers above, but they are inferences.</p>
+    </div>
+
+    <h3>Why This Has Not Been Built Yet</h3>
+    <p>Most venture capital and product thinking about LATAM ecommerce has focused on the formal market — MercadoLibre, Shopee, Amazon. The informal live selling ecosystem is largely invisible to investors because it does not show up in formal ecommerce data. Instagram Live sessions are not tracked. WhatsApp orders are not reported. The $1.08B Colombia social commerce figure and the $3.9B LATAM live commerce figure almost certainly understate real activity. That invisibility is exactly why the infrastructure gap has not yet been filled.</p>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════ TAB 3: THE COMPETITION ═══════════════════════ -->
+<div class="tab-panel" id="tab-competition">
+<div class="doc">
+
+  <div class="section">
+    <div class="section-tag">Section 03</div>
+    <div class="section-title">Who Is Already in the Market</div>
+
+    <p>Understanding the competition is essential to understanding whether there is a real opening. The short answer: there is an opening, but it is time-limited. Here is the honest picture.</p>
+
+    <h3>TikTok Shop — The Most Important Competitor</h3>
+    <p>TikTok Shop is the competitor that matters most. Here is what is actually happening right now:</p>
+    <ul>
+      <li><strong>Mexico:</strong> Fully live since February 2024. First LATAM market. Fashion, skincare, and electronics are the top categories. TikTok users in Mexico average 70+ minutes per day on the app.</li>
+      <li><strong>Brazil:</strong> Launched May 2025. Went from $1M to $46M monthly GMV in just three months. <em>Source: M2E Cloud 2025.</em> That is violent growth.</li>
+      <li><strong>Colombia:</strong> In beta right now. Confirmed for full rollout in 2025. A small group of sellers with existing ecommerce infrastructure are already in the early seller program.</li>
+    </ul>
+
+    <p>TikTok Shop is real, it is moving fast, and it cannot be dismissed. But it has structural limitations that create the opening for a dedicated platform:</p>
+
+    <div class="vs-grid">
+      <div class="vs-col theirs">
+        <div class="vs-label">TikTok Shop — What It Is</div>
+        <ul>
+          <li>An entertainment app with commerce bolted on</li>
+          <li>Optimized for the algorithm and viewer experience</li>
+          <li>Requires established ecommerce infrastructure to onboard as a seller</li>
+          <li>Horizontal — 70M+ products across every category</li>
+          <li>Seller is one of millions; discovery is algorithm-controlled</li>
+          <li>Logistics are the seller's problem — no fulfillment support</li>
+          <li>Not built for the informal micro-seller doing 80 orders per live session from her apartment</li>
+        </ul>
+      </div>
+      <div class="vs-col ours">
+        <div class="vs-label">A Dedicated Live Platform — What It Would Be</div>
+        <ul>
+          <li>A commerce platform with entertainment built in</li>
+          <li>Optimized for the seller's revenue and the buyer's trust</li>
+          <li>Built specifically for informal sellers who need order automation, not just a shop page</li>
+          <li>Vertical — fashion, beauty, lingerie; deep category focus</li>
+          <li>Seller is discoverable to new buyers she has never reached</li>
+          <li>Integrated shipping labels, COD support, Nequi/PSE payment rails</li>
+          <li>Built exactly for the micro-seller doing live sessions from Medellín</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>The informal Medellín fashion reseller gets lost on TikTok. She does not have a registered business, a warehouse, or a product catalog uploaded to a backend. On a purpose-built platform, she is the hero. That is the market TikTok is not serving and will not serve — because it is not their business model.</p>
+
+    <h3>MercadoLibre — The Incumbent</h3>
+    <p>MercadoLibre is LATAM's dominant marketplace — 94M+ unique buyers, best-in-class logistics, and Mercado Pago. <em>Source: MELI investor relations 2025.</em> It is search-first. A buyer goes to MELI knowing what they want. It is demand fulfillment. A live commerce platform creates demand — surfacing products buyers did not know they wanted. These are different psychological moments. The platforms do not compete directly. MELI has no meaningful live commerce product and, given its culture and infrastructure, is unlikely to build one that serves informal sellers well.</p>
+
+    <h3>Instagram and Facebook Live — The Current Reality</h3>
+    <p>Instagram and Facebook are where the behavior lives today. They are the competition in the sense that sellers are already using them. But they are not real competitors because they have no intention of building order management, payment processing, shipping integration, or discovery beyond existing followers for informal sellers. Meta's business is advertising. It has no incentive to build the infrastructure that would make live selling easy. That infrastructure gap is the product.</p>
+
+    <h3>The Window</h3>
+    <p>TikTok Shop Colombia's full rollout is the clock. Once TikTok is fully live in Colombia and has spent aggressively on seller acquisition, the window to establish a dedicated platform with seller lock-in narrows significantly. Based on TikTok's pace in Mexico and Brazil, full Colombian rollout is likely by end of 2025 or early 2026. That means the window to establish a first position in Colombia is <strong>open right now and closes within 12–18 months.</strong></p>
+
+    <div class="box risk">
+      <div class="box-title">The Honest Risk on Competition</div>
+      <p>TikTok is not a paper tiger. Its brand, algorithm, and user base are genuinely powerful. A dedicated platform cannot out-algorithm TikTok. What it can do is out-serve the seller segment TikTok does not care about — and build switching costs (seller followers, order history, ratings) fast enough that those sellers do not leave when TikTok arrives in full force.</p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════ TAB 4: WHY IT CAN WIN ═══════════════════════ -->
+<div class="tab-panel" id="tab-why-win">
+<div class="doc">
+
+  <div class="section">
+    <div class="section-tag">Section 04</div>
+    <div class="section-title">Why a New Platform Can Win</div>
+
+    <p>The question is not whether live commerce will be big in LATAM — it will be. The question is whether a new, dedicated platform can carve out a real position against TikTok, MELI, and Instagram. The answer is yes, for specific reasons.</p>
+
+    <h3>1. Discovery Is the Product Nobody Is Selling</h3>
+    <p>Every seller doing live commerce on Instagram today is hard-capped by her follower count. A seller with 5,000 followers can only ever sell to those 5,000 people. Instagram will never surface her content to strangers because Instagram is a social graph, not a commerce discovery engine.</p>
+    <p>A dedicated live commerce platform with a discovery feed changes her economics entirely. A seller in Medellín gets surfaced to buyers in Bogotá, Barranquilla, and Cali who have never seen her content. That is a 10x expansion of her addressable market with no additional effort on her part. That value is real, it is immediately obvious to sellers, and it is the primary reason they would switch platforms.</p>
+
+    <h3>2. The Seller Tooling Gap Is Enormous</h3>
+    <p>After every live session, the typical Colombian fashion seller spends two hours managing DMs, confirming orders, chasing payments, and manually creating shipping labels. A platform that automates all of that in one click — order queue generated automatically, payment confirmed instantly via Nequi, shipping label printed in bulk — saves her two hours per session. If she does three sessions a week, that is six hours of work eliminated. That is a real quality-of-life upgrade that creates genuine loyalty, independent of any discovery benefit.</p>
+
+    <h3>3. Colombia Has a Supply Moat That No Other LATAM City Has</h3>
+    <p>Medellín is Latin America's fashion manufacturing capital. It produces 45% of Colombia's textiles from more than 10,000 factories. <em>Source: Medellín Advisors / Colombia One.</em> Colombiamoda, held annually in Medellín, is LATAM's largest fashion trade show and brings 12,000 fashion buyers to one location every July. <em>Source: Business of Fashion 2024.</em> Lingerie is Colombia's second-largest apparel export after denim. <em>Source: California Apparel News.</em></p>
+    <p>This means the seller supply problem — which kills most marketplace cold starts — is pre-solved in Colombia. The sellers already exist, already sell online, and are geographically concentrated in one city. No other LATAM market offers this combination.</p>
+
+    <h3>4. Payment Infrastructure Is Ready</h3>
+    <p>Colombia's payment rails have matured rapidly. Nequi has 24M+ users — half the adult population. Digital wallet transfers grew 231% in H2 2024. <em>Source: Colombia Financial Superintendence.</em> Colombia is also launching Bre-B in 2025 — an instant payment system modeled directly after Brazil's PIX. <em>Source: PCMI 2025.</em> The infrastructure required for a live commerce platform to function — instant payment, digital wallets, mobile-first behavior — is already in place and growing fast.</p>
+
+    <h3>5. Local Network and Market Knowledge</h3>
+    <p>Having existing connections within Colombia's seller and fashion community meaningfully reduces the time and capital required to reach the first 50 sellers. Cold outreach to informal sellers converts at 5–10%. A warm introduction from someone already trusted in the community converts at 40–60%. That compresses the most capital-intensive early phase of marketplace building.</p>
+
+    <h3>6. Colombia Is the R&D Phase for Brazil</h3>
+    <p>Brazil is ultimately the biggest prize in LATAM live commerce — $15.6B social commerce market in 2025 growing to $55.7B by 2030. <em>Source: Mordor Intelligence.</em> But entering Brazil cold at seed stage, against TikTok Shop which already hit $46M monthly GMV in three months there, is a very expensive bet. Entering Brazil at Series A with a working Colombian playbook, real seller retention data, and a proven product is a materially better bet. Colombia is not a smaller version of the opportunity — it is the proof of concept that makes the larger opportunity fundable.</p>
+
+    <div class="box verdict">
+      <div class="box-title">Why It Wins</div>
+      <p>It wins not by out-scaling TikTok or out-marketing Instagram, but by serving a specific seller segment those platforms actively ignore — the informal micro-seller doing live commerce from her home, managing her business on WhatsApp, and generating real revenue with no professional infrastructure. That seller is the market. A platform built for her, in a city where she is densely concentrated, with payment rails that work and a fashion supply chain that is unmatched in the region, has a genuine and defensible first position.</p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════ TAB 5: WHERE TO START ═══════════════════════ -->
+<div class="tab-panel" id="tab-where">
+<div class="doc">
+
+  <div class="section">
+    <div class="section-tag">Section 05</div>
+    <div class="section-title">Where to Start and What to Launch With</div>
+
+    <p>If the decision is to pursue this, two choices matter most at the start: which country and which category. Both have clear answers.</p>
+
+    <h3>Country: Colombia First, Then Brazil, Then Mexico</h3>
+    <p>Colombia is the right starting point — not because it is the biggest market, but because it is the smartest proving ground. Here is the comparison:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th>Colombia (Start Here)</th>
+            <th>Brazil (Market #2)</th>
+            <th>Mexico (Market #3)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Ecommerce Market Size</strong></td>
+            <td>$14.7B in 2025</td>
+            <td>~$180B in 2024</td>
+            <td>~$80B in 2025</td>
+          </tr>
+          <tr>
+            <td><strong>Social Commerce</strong></td>
+            <td>$1.2B, 26% CAGR</td>
+            <td>$15.6B, 29% CAGR</td>
+            <td>Large, growing fast</td>
+          </tr>
+          <tr>
+            <td><strong>Fashion Seller Supply</strong></td>
+            <td>Exceptional — Medellín</td>
+            <td>Strong — São Paulo</td>
+            <td>Strong — CDMX</td>
+          </tr>
+          <tr>
+            <td><strong>Payment Rails</strong></td>
+            <td>Nequi (24M users), Bre-B launching</td>
+            <td>PIX — world-class</td>
+            <td>SPEI — functional</td>
+          </tr>
+          <tr>
+            <td><strong>TikTok Shop Status</strong></td>
+            <td>Beta only — window open</td>
+            <td>Live and scaling fast</td>
+            <td>Fully live since Feb 2024</td>
+          </tr>
+          <tr>
+            <td><strong>Operational Complexity</strong></td>
+            <td>Manageable</td>
+            <td>High — 26-state tax codes</td>
+            <td>Moderate</td>
+          </tr>
+          <tr>
+            <td><strong>Capital Required to Prove Model</strong></td>
+            <td>Low ($500K–$1.5M seed)</td>
+            <td>High ($5M+ to start)</td>
+            <td>Moderate</td>
+          </tr>
+          <tr>
+            <td><strong>Why This Order</strong></td>
+            <td>Prove it here cheaply</td>
+            <td>Scale it here at Series A</td>
+            <td>Expand here after Brazil</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The sequencing logic is simple: Colombia lets you prove the model exists, the unit economics work, and sellers actually stay — on $1–2M of capital. Brazil lets you scale that model into the biggest LATAM market, armed with real data, on Series A capital. Mexico follows naturally after Brazil.</p>
+
+    <h3>City: Start in Medellín</h3>
+    <p>Within Colombia, Medellín is the right starting city. It has 10,000+ textile factories, the densest concentration of fashion resellers in the country, an annual fashion trade show that brings 12,000 buyers to one location, and a culture of entrepreneurship in the informal fashion sector that is unmatched anywhere in LATAM. The first 60 days should be Medellín-only. Expand to Bogotá at Month 3 once the playbook is repeatable.</p>
+
+    <h3>Category: Fashion + Beauty + Colombian Lingerie</h3>
+    <p>Three categories at launch, all sharing the same seller profile and buyer demographic:</p>
+    <ul>
+      <li><strong>Fashion / Apparel:</strong> The #1 live commerce category globally (21.4% share) and in Colombia specifically. <em>Source: Grand View Research 2024.</em> Gross margins for resellers run 40–70%. Already the dominant live selling category on Instagram and Facebook in Colombia.</li>
+      <li><strong>Beauty / Cosmetics:</strong> Fastest-growing category on Whatnot US (+791% YoY). <em>Source: Sacra 2024.</em> Lightweight shipping. High repeat purchase. Tutorial format is native to live video. Deep influencer community in Bogotá and Medellín.</li>
+      <li><strong>Colombian Lingerie / Shapewear:</strong> Colombia's second-largest apparel export after denim. <em>Source: California Apparel News.</em> Brands like Leonisa are globally recognized. Medellín has a massive informal reseller layer moving volume directly from manufacturers to buyers. No other LATAM market has this supply density in this category.</li>
+    </ul>
+
+    <h3>What to Prove Before Going Further</h3>
+    <p>The decision to keep investing — in Colombia and then in Brazil — should be conditional on proving four things in the first six months:</p>
+    <ul>
+      <li>Sellers generate more GMV per live session on the platform than on Instagram (the core value proposition)</li>
+      <li>Sellers keep using the platform after 90 days (retention above 55%)</li>
+      <li>Buyers come back and buy again within 30 days (repeat rate above 30%)</li>
+      <li>Average session viewers grow month-over-month (the discovery engine is working)</li>
+    </ul>
+
+    <p>If those four things are true at Month 6, this is a fundable and scalable business. If they are not, the model needs to be reassessed before going further.</p>
+
+    <div class="box">
+      <div class="box-title">The Three Stage Gates</div>
+      <div class="timeline">
+        <div class="tl-row">
+          <div class="tl-time">Seed Now</div>
+          <div class="tl-content">
+            <strong>$500K–$1.5M — Prove Colombia Works</strong>
+            <p>50 active sellers in Medellín · $100K monthly GMV · seller retention above 55% · product working</p>
+          </div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-time">Month 9</div>
+          <div class="tl-content">
+            <strong>$3–6M Pre-Series A — Prove Colombia Scales</strong>
+            <p>200 sellers · $500K monthly GMV · 4 cities live · contribution margin positive · Brazil plan ready</p>
+          </div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-time">Month 18</div>
+          <div class="tl-content">
+            <strong>$12–20M Series A — Enter Brazil</strong>
+            <p>400+ sellers · $2M monthly GMV in Colombia · Brazil launch · the LATAM thesis is now fundable at scale</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════ TAB: VALIDATION ═══════════════════════ -->
+<div class="tab-panel" id="tab-validation">
+<div class="doc">
+
+  <div class="section">
+    <div class="section-tag">Section 05B</div>
+    <div class="section-title">How to Prove This Before Going All In</div>
+
+    <p>The goal of this phase is to answer one question with real data rather than assumption: <strong>do sellers actually earn more on this platform than they do on Instagram, and do they stay?</strong> If yes, the business is real. If no, you learn that cheaply before committing serious capital.</p>
+
+    <p>These steps are ordered by cost and commitment — start at the top and only go deeper if the prior step gives you a green light.</p>
+
+    <div class="box">
+      <div class="box-title">The Governing Logic</div>
+      <p>Almost every assumption in the financial model flows from seller behavior. You cannot model this credibly from a spreadsheet. You need to run real live sessions and observe what actually happens. The validation steps below are designed to generate the four data points that unlock the full model: average viewers per session, real AOV, seller retention at 90 days, and COD non-collection rate. None of these can be estimated with confidence before going live.</p>
+    </div>
+
+    <h3>Step 1 — Talk to 20 Sellers Before Building Anything</h3>
+    <p><strong>Cost: Zero. Time: 2–3 weeks.</strong></p>
+    <p>Before writing a line of code or spending a dollar, have direct conversations with 20 sellers who are currently doing live selling on Instagram or Facebook in Medellín and Bogotá. The goal is not to pitch them. The goal is to understand their actual workflow, their actual revenue, and what they hate most about it.</p>
+    <p>Specific questions to answer from these conversations:</p>
+    <ul>
+      <li>How many orders do you process per live session on average?</li>
+      <li>How long does post-session order management take you?</li>
+      <li>What is your average order value?</li>
+      <li>What percentage of your buyers pay via Nequi vs. COD vs. bank transfer?</li>
+      <li>What is your biggest operational pain point?</li>
+      <li>Would you move to a new platform if it automated your order management and brought you new buyers — and what would that be worth to you?</li>
+    </ul>
+    <p>If the answer to the last question is consistently "yes, and I'd pay for it," you have qualitative validation. If sellers are indifferent or satisfied with Instagram, that is critical information before you build anything.</p>
+    <p><strong>Green light signal:</strong> 15 out of 20 sellers describe the same core pain (DM chaos, follower ceiling) and express clear interest in a platform that solves it.</p>
+
+    <h3>Step 2 — Run 10 Live Sessions With a Manual Backend</h3>
+    <p><strong>Cost: Minimal. Time: 4–6 weeks.</strong></p>
+    <p>Before building a full product, run actual live selling sessions using the simplest possible tools — a basic livestream setup, a Google Form or Typeform for order capture, and Nequi for payment. This is sometimes called a "Wizard of Oz" test. The seller goes live, buyers claim, and a person manually processes everything on the backend. Ugly, but it tells you whether the behavior works and what the real numbers look like.</p>
+    <p>What you are measuring in these 10 sessions:</p>
+    <ul>
+      <li><strong>Avg viewers per session</strong> — the most critical unknown in the financial model</li>
+      <li><strong>Viewer-to-claim conversion rate</strong> — does live urgency actually drive purchases?</li>
+      <li><strong>Real AOV</strong> — what are buyers actually spending per order in Colombia?</li>
+      <li><strong>Order volume per session</strong> — how many orders does a seller generate per live?</li>
+      <li><strong>Payment method mix</strong> — Nequi vs. COD vs. transfer, in practice</li>
+      <li><strong>Seller willingness to return</strong> — do they want to do this again on a platform vs. back to Instagram?</li>
+    </ul>
+    <p>These 10 sessions give you the real inputs to fill in the financial model. There is no substitute for this data.</p>
+    <p><strong>Green light signal:</strong> Sellers generate meaningfully more orders per session than they report from their current Instagram Lives. Viewer-to-claim conversion is above 7%. Sellers want to do it again.</p>
+
+    <h3>Step 3 — Build the Minimum Viable Product and Run 30 Days</h3>
+    <p><strong>Cost: $50–150K in development. Time: 8–12 weeks to build, then 30 days of operation.</strong></p>
+    <p>If Steps 1 and 2 are green, build the smallest possible functional product: live stream, one-tap claim button, Nequi/PSE payment, auto order queue, shipping label generation. Nothing else. Put 15 sellers on it for 30 days and measure everything.</p>
+    <p>At the end of 30 days you want to know:</p>
+    <ul>
+      <li>Do sellers actually earn more per session on the platform than on Instagram? (The core value proposition.)</li>
+      <li>Are buyers completing payments without dropping off? (Payment flow works.)</li>
+      <li>Are sellers scheduling their next session without being asked? (Organic retention signal.)</li>
+      <li>What is breaking that needs to be fixed before adding more sellers?</li>
+    </ul>
+    <p><strong>Green light signal:</strong> Sellers are earning more, payment completion is above 75%, and at least 10 of the 15 sellers run a second session without prompting.</p>
+
+    <h3>Step 4 — Measure 90-Day Seller Retention</h3>
+    <p><strong>Cost: Ongoing operations. Time: 3 months from Step 3 launch.</strong></p>
+    <p>Retention is the single most important metric and cannot be rushed. You need to know whether sellers keep using the platform after the novelty wears off. A seller who does five sessions and then goes back to Instagram is not a retained seller — she is a data point that the platform failed to deliver sustained value.</p>
+    <p>Track the Month 1 cohort (the first 15–20 sellers) through their 90th day on the platform. Specifically:</p>
+    <ul>
+      <li>What percentage are still active at Day 30, Day 60, Day 90?</li>
+      <li>Are their per-session GMV figures growing, flat, or declining over time?</li>
+      <li>What are the sellers who churned citing as their reason?</li>
+    </ul>
+    <p><strong>Green light signal:</strong> 55%+ of the Month 1 seller cohort is still active at Day 90. GMV per session is flat or growing.</p>
+    <p><strong>If this fails:</strong> Understand why before adding more sellers. Churned sellers are the most important interviews you will do. If the reason is consistent (e.g., not enough new buyers, COD logistics too painful, take rate too high), that is fixable. If the reason is "I just prefer Instagram," the product thesis has a problem.</p>
+
+    <h3>Step 5 — Confirm the Colombia → Brazil Expansion Path Is Real</h3>
+    <p><strong>Cost: Research only. Time: Parallel to Steps 3–4.</strong></p>
+    <p>While validating Colombia, begin confirming that the same model can work in Brazil. This does not require building anything in Brazil yet. It requires:</p>
+    <ul>
+      <li>Talking to 10–15 fashion sellers in São Paulo who are currently doing Instagram Live selling — do they have the same pain points as Colombian sellers?</li>
+      <li>Confirming that PIX + Correios/JADLOG logistics can support the same model that works in Colombia</li>
+      <li>Understanding whether Brazilian sellers would switch platforms under the same value proposition as Colombian sellers</li>
+      <li>Mapping the competitive landscape in Brazil — TikTok Shop is live there and scaling fast, so the window is narrower</li>
+    </ul>
+    <p><strong>Green light signal:</strong> Brazilian sellers describe the same workflow and the same pain. The Colombia playbook is transferable with modest localization.</p>
+
+    <div class="box verdict">
+      <div class="box-title">What "Going All In" Looks Like</div>
+      <p>Going all in means raising a Pre-Series A ($3–6M) and scaling from 50 sellers to 200+ across 4 Colombian cities, with Brazil on the roadmap. That decision should only be made after Steps 1–4 are complete and all four green light signals are confirmed. If any one of them fails — sellers don't retain, GMV per session doesn't beat Instagram, COD logistics is unmanageable — the model needs to be reassessed before scaling capital. The entire point of the Colombia-first approach is that you can get to all four answers for $500K–$1.5M, before committing the capital that Brazil requires.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>What You're Proving</th>
+            <th>Cost</th>
+            <th>Green Light Signal</th>
+            <th>If It Fails</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Talk to 20 sellers</strong></td>
+            <td>Is the pain real and consistent?</td>
+            <td>$0</td>
+            <td>15/20 describe same pain, express clear interest</td>
+            <td>Stop. The problem may not be as acute as assumed.</td>
+          </tr>
+          <tr>
+            <td><strong>2. Run 10 live sessions manually</strong></td>
+            <td>Do the real numbers support the model?</td>
+            <td>Minimal</td>
+            <td>Conversion &gt;7%, sellers want to repeat, AOV is real</td>
+            <td>Diagnose before building. May be a category or seller selection issue.</td>
+          </tr>
+          <tr>
+            <td><strong>3. MVP — 30 days with 15 sellers</strong></td>
+            <td>Does the product actually improve seller economics?</td>
+            <td>$50–150K</td>
+            <td>Sellers earn more than on Instagram, payment flow works, 10/15 run again unprompted</td>
+            <td>Fix what's breaking before adding sellers. Do not scale a broken product.</td>
+          </tr>
+          <tr>
+            <td><strong>4. 90-day retention</strong></td>
+            <td>Do sellers stay?</td>
+            <td>Ongoing ops</td>
+            <td>55%+ of Month 1 cohort still active at Day 90</td>
+            <td>Interview churned sellers. If fixable, fix it. If structural, reassess.</td>
+          </tr>
+          <tr>
+            <td><strong>5. Brazil confirmation</strong></td>
+            <td>Is the expansion path real?</td>
+            <td>Research only</td>
+            <td>Same pain, same willingness to switch, PIX logistics confirmed</td>
+            <td>Colombia may still be worth pursuing as a standalone market.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════ TAB: THE VERDICT ═══════════════════════ -->
+<div class="tab-panel" id="tab-verdict">
+<div class="doc">
+
+  <div class="section">
+    <div class="section-tag">Section 06</div>
+    <div class="section-title">The Verdict</div>
+
+    <div class="box verdict">
+      <div class="box-title">Go / No-Go</div>
+      <p><strong>Go.</strong> The market is large, the behavior is proven, the infrastructure gap is real, and the window in Colombia is open right now. This is worth pursuing — starting in Medellín, with fashion and beauty, on seed capital that is modest relative to the size of the opportunity if it proves out.</p>
+    </div>
+
+    <h3>The Case For</h3>
+    <ul>
+      <li><strong>The demand is not hypothetical.</strong> Sellers in Colombia are live-selling every day with no platform. The behavior is trained, the payment rails exist, and the category supply in Medellín is unmatched in LATAM.</li>
+      <li><strong>The market is growing fast.</strong> LATAM live commerce at 27% CAGR, Colombia social commerce at 26% CAGR, and Brazil social commerce at 29% CAGR. These are not slow markets.</li>
+      <li><strong>LATAM consumers are the most engaged live commerce audience in the world.</strong> 41 minutes average session time, higher than China and the US. This is cultural fit, not a marketing problem to solve.</li>
+      <li><strong>The competition has not closed the door yet.</strong> TikTok Shop Colombia is still in beta. The window to establish seller lock-in before TikTok's full rollout is open right now. It will not be open in two years.</li>
+      <li><strong>The seller segment the platform serves is genuinely underserved.</strong> TikTok does not build for the informal micro-seller. MELI does not build for live. Instagram does not build order management. The gap is real.</li>
+      <li><strong>Colombia is a capital-efficient starting point.</strong> This can be proved for $1–2M. If it does not work in Colombia, you learn that cheaply before committing Brazil-scale capital.</li>
+    </ul>
+
+    <h3>The Case Against</h3>
+    <ul>
+      <li><strong>TikTok is coming and it is not small.</strong> Once TikTok Shop Colombia is fully live, it will have more distribution, more algorithm power, and likely a lower take rate than any new entrant can offer. The platform has to build seller switching costs fast.</li>
+      <li><strong>Marketplace cold starts are hard.</strong> A live platform with no viewers does not attract sellers. Getting the first 50 sellers and first buyers to the platform simultaneously is operationally demanding and has to be executed manually.</li>
+      <li><strong>Colombia's market is smaller than Brazil.</strong> The GMV milestones in Colombia ($2M monthly by Month 12) are real but modest. This is a proof-of-concept phase, not a revenue phase. Investor expectations have to be calibrated to that.</li>
+    </ul>
+
+    <h3>What Makes This Succeed vs. Fail</h3>
+
+    <div class="verdict-grid">
+      <div class="verdict-col yes">
+        <h4>Makes It Work</h4>
+        <ul>
+          <li>First 50 sellers recruited through warm introductions — not cold outreach</li>
+          <li>Sellers visibly earn more per session than on Instagram within 60 days</li>
+          <li>Discovery feed surfaces sellers to new buyers from Day 1</li>
+          <li>COD and Nequi both supported from launch — no buyer segment excluded</li>
+          <li>Move before TikTok's full Colombian rollout</li>
+        </ul>
+      </div>
+      <div class="verdict-col watch">
+        <h4>Watch Closely</h4>
+        <ul>
+          <li>TikTok Shop Colombia launch timeline — any acceleration changes the calculus</li>
+          <li>Seller retention at 90 days — the single most important early metric</li>
+          <li>Average viewers per session — the discovery engine's report card</li>
+          <li>COD non-collection rate — Colombia is still cash-heavy and this can erode economics</li>
+        </ul>
+      </div>
+      <div class="verdict-col no">
+        <h4>What Kills It</h4>
+        <ul>
+          <li>Sellers onboard but don't go live — platform stays empty</li>
+          <li>TikTok fully launches in Colombia before seller lock-in is established</li>
+          <li>Viewer counts don't grow — discovery engine fails, sellers see no uplift</li>
+          <li>Trying to launch in Brazil and Colombia simultaneously — splits focus and capital</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Final Summary</h3>
+    <p>This is worth pursuing. The market is real, the behavior is proven, the competition has not closed the door yet, and the Colombia-first approach means the initial capital commitment is modest relative to the potential scale. The thesis is: prove it in Medellín, scale it across Colombia, and use that proof to enter Brazil at Series A with data rather than theory.</p>
+    <p>The one thing to keep front of mind: <strong>the window in Colombia is time-limited.</strong> TikTok Shop is coming. The value of moving now is not just about market timing in the abstract — it is about getting 200 sellers on a platform before TikTok makes it significantly harder to recruit them.</p>
+
+    <div class="box neutral">
+      <div class="box-title">Next Step If You Decide to Go</div>
+      <p>The immediate action is simple: map out the seller community connections in Medellín and identify the first 15–20 sellers who are already doing live selling on Instagram or Facebook and are reachable through trusted introductions. That list is the foundation. Everything else — product, capital, logistics — follows from getting those first sellers live on a platform and measuring whether they earn more than they did on Instagram.</p>
+    </div>
+
+    <div class="colophon">
+      <span>CONFIDENTIAL // DECISION MEMO</span>
+      <span>COLOMBIA FIRST → BRAZIL → MEXICO</span>
+      <span>APRIL 2026</span>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════ TAB 7: FINANCIAL PROJECTIONS ═══════════════════════ -->
+<div class="tab-panel" id="tab-financials">
+<div class="doc">
+
+  <div class="section">
+    <div class="section-tag">Section 07</div>
+    <div class="section-title">Financial Projections</div>
+
+    <div class="box neutral">
+      <div class="box-title">Status of This Section</div>
+      <p>Placeholders only. These projections will be built out through diligence — primarily by running the first live sessions, measuring real seller GMV, AOV, and retention, and replacing assumptions with observed data. The structure below defines what needs to be modeled and what inputs are required to do so credibly.</p>
+    </div>
+
+    <h3>Key Drivers — To Be Validated</h3>
+    <p>All projections flow from five inputs that cannot be reliably estimated without real operational data. These are the first things to measure once sellers are live on the platform.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Input</th>
+            <th>Why It Matters</th>
+            <th>How to Measure</th>
+            <th>Placeholder</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Avg viewers per live session</strong></td>
+            <td>Single biggest driver of GMV. Everything downstream depends on this.</td>
+            <td>Measure across first 10 live sessions on platform</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+          </tr>
+          <tr>
+            <td><strong>Average order value (AOV)</strong></td>
+            <td>Colombia ecomm AOV is ~$49–$126 across all categories. Live fashion micro-items are likely lower. Real number unknown.</td>
+            <td>Measure across first 100 completed orders</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+          </tr>
+          <tr>
+            <td><strong>Viewer → claim conversion rate</strong></td>
+            <td>Sourced range is 9–30% for live commerce globally. Where Colombia lands within that range determines unit economics.</td>
+            <td>Measure across first 10 live sessions</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">9–30% (global range)</td>
+          </tr>
+          <tr>
+            <td><strong>Seller 90-day retention</strong></td>
+            <td>If sellers churn, the entire model collapses. This is the most important retention metric.</td>
+            <td>Track Month 1 cohort through Month 4</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+          </tr>
+          <tr>
+            <td><strong>COD non-collection rate</strong></td>
+            <td>Colombia is still ~78% cash. COD rejections erode margins. Real Colombia-specific rate unknown.</td>
+            <td>Measure across first 500 COD orders</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>GMV Projections — Scenario Framework</h3>
+    <p>Three scenarios based on the number of active sellers and their average monthly GMV. All figures are placeholders to be replaced with real data as it becomes available.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Milestone</th>
+            <th>Active Sellers</th>
+            <th>GMV / Seller / Month</th>
+            <th>Monthly GMV</th>
+            <th>Annual GMV Run Rate</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Month 1 (Medellín launch)</strong></td>
+            <td>15</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td><span style="font-family:'Space Mono',monospace;font-size:9px;background:#fff0cc;color:var(--yellow);padding:2px 8px;border-radius:2px;font-weight:700">PLACEHOLDER</span></td>
+          </tr>
+          <tr>
+            <td><strong>Month 3 (Seed gate)</strong></td>
+            <td>50</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td><span style="font-family:'Space Mono',monospace;font-size:9px;background:#fff0cc;color:var(--yellow);padding:2px 8px;border-radius:2px;font-weight:700">PLACEHOLDER</span></td>
+          </tr>
+          <tr>
+            <td><strong>Month 6</strong></td>
+            <td>150</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td><span style="font-family:'Space Mono',monospace;font-size:9px;background:#fff0cc;color:var(--yellow);padding:2px 8px;border-radius:2px;font-weight:700">PLACEHOLDER</span></td>
+          </tr>
+          <tr>
+            <td><strong>Month 12 (Pre-A gate)</strong></td>
+            <td>400</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td><span style="font-family:'Space Mono',monospace;font-size:9px;background:#fff0cc;color:var(--yellow);padding:2px 8px;border-radius:2px;font-weight:700">PLACEHOLDER</span></td>
+          </tr>
+          <tr>
+            <td><strong>Month 18 (Series A gate)</strong></td>
+            <td>400+ Colombia + Brazil launch</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td><span style="font-family:'Space Mono',monospace;font-size:9px;background:#fff0cc;color:var(--yellow);padding:2px 8px;border-radius:2px;font-weight:700">PLACEHOLDER</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Revenue Model</h3>
+    <p>Revenue is a function of GMV and effective take rate. The target blended take rate is 10% (8% transaction fee + ~2% payment/COD margin). Whatnot US runs at ~12.5% for reference. <em>Source: Sacra 2024.</em></p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Revenue Stream</th>
+            <th>Rate</th>
+            <th>Year 1 Revenue</th>
+            <th>Year 2 Revenue</th>
+            <th>Year 3 Revenue</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Transaction fee</strong></td>
+            <td>8% of GMV</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+          </tr>
+          <tr>
+            <td><strong>Payment processing margin</strong></td>
+            <td>~1–2% of GMV</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+          </tr>
+          <tr>
+            <td><strong>Shipping margin</strong></td>
+            <td>5–12% of shipping revenue</td>
+            <td>—</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+          </tr>
+          <tr>
+            <td><strong>Seller boosted discovery</strong></td>
+            <td>To be defined</td>
+            <td>—</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+          </tr>
+          <tr>
+            <td><strong>Total Net Revenue</strong></td>
+            <td>~10% blended</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent);font-weight:700">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent);font-weight:700">TBD</td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent);font-weight:700">TBD</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Cost Structure — Known Inputs</h3>
+    <p>Some cost inputs are estimable now. Others depend on operational data.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Cost Item</th>
+            <th>Estimate</th>
+            <th>Confidence</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Headcount (10-person Colombia team)</strong></td>
+            <td>~$60–80K / month</td>
+            <td><span style="font-family:'Space Mono',monospace;font-size:9px;background:#d4f0dc;color:var(--green);padding:2px 8px;border-radius:2px;font-weight:700">REASONABLE EST.</span></td>
+            <td>Colombia salary base significantly lower than Brazil or Mexico</td>
+          </tr>
+          <tr>
+            <td><strong>Live streaming infrastructure (AWS/CDN)</strong></td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td><span style="font-family:'Space Mono',monospace;font-size:9px;background:#fff0cc;color:var(--yellow);padding:2px 8px;border-radius:2px;font-weight:700">NEEDS QUOTE</span></td>
+            <td>Depends on concurrent viewer volume. Negotiate CDN deal early.</td>
+          </tr>
+          <tr>
+            <td><strong>Payment processing cost</strong></td>
+            <td>~1.3% of GMV (blended)</td>
+            <td><span style="font-family:'Space Mono',monospace;font-size:9px;background:#d4f0dc;color:var(--green);padding:2px 8px;border-radius:2px;font-weight:700">REASONABLE EST.</span></td>
+            <td>Nequi near-zero; PSE/card costs ~2.5%; COD depends on carrier deal</td>
+          </tr>
+          <tr>
+            <td><strong>Seller acquisition cost</strong></td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td><span style="font-family:'Space Mono',monospace;font-size:9px;background:#fff0cc;color:var(--yellow);padding:2px 8px;border-radius:2px;font-weight:700">NEEDS DATA</span></td>
+            <td>Warm network introductions = near zero. Cold outbound = $200–400 est.</td>
+          </tr>
+          <tr>
+            <td><strong>Buyer acquisition cost</strong></td>
+            <td>~$0 Year 1</td>
+            <td><span style="font-family:'Space Mono',monospace;font-size:9px;background:#d4f0dc;color:var(--green);padding:2px 8px;border-radius:2px;font-weight:700">REASONABLE EST.</span></td>
+            <td>Buyers follow sellers from Instagram/WhatsApp in Year 1 — no paid acquisition needed</td>
+          </tr>
+          <tr>
+            <td><strong>G&A / legal / DIAN compliance</strong></td>
+            <td style="font-family:'Space Mono',monospace;color:var(--accent)">TBD</td>
+            <td><span style="font-family:'Space Mono',monospace;font-size:9px;background:#fff0cc;color:var(--yellow);padding:2px 8px;border-radius:2px;font-weight:700">NEEDS LOCAL COUNSEL</span></td>
+            <td>Colombia DIAN tax compliance for a marketplace requires local legal structure</td>
+          </tr>
+          <tr>
+            <td><strong>Total Monthly Burn (est.)</strong></td>
+            <td>~$80–120K / month</td>
+            <td><span style="font-family:'Space Mono',monospace;font-size:9px;background:#fff0cc;color:var(--yellow);padding:2px 8px;border-radius:2px;font-weight:700">ROUGH EST.</span></td>
+            <td>Replace with actual payroll + AWS invoice in Month 1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Capital Requirement — Staged</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th>Amount</th>
+            <th>Use</th>
+            <th>Milestone to Unlock Next Round</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Seed</strong></td>
+            <td>$500K–$1.5M</td>
+            <td>Build MVP, recruit first 50 sellers, prove unit economics in Medellín</td>
+            <td>50 active sellers · $100K monthly GMV · seller retention &gt;55%</td>
+          </tr>
+          <tr>
+            <td><strong>Pre-Series A</strong></td>
+            <td>$3–6M</td>
+            <td>Scale to 200 sellers, expand to 4 Colombian cities, contribution margin positive</td>
+            <td>$500K monthly GMV · positive contribution margin · Brazil plan ready</td>
+          </tr>
+          <tr>
+            <td><strong>Series A</strong></td>
+            <td>$12–20M</td>
+            <td>Enter Brazil aggressively with working Colombia playbook</td>
+            <td>$2M monthly GMV in Colombia · burn multiple &lt;3x</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="box">
+      <div class="box-title">What Fills In These Blanks</div>
+      <p>The financial model cannot be built credibly until the following data points are observed from real operations: average viewers per live session, actual AOV for live fashion Colombia, seller activation rate from the first cohort, and COD non-collection rate. These are the four inputs that drive everything else. None of them can be estimated with confidence before going live. The right move is to get 10–15 sellers live as quickly as possible, measure these numbers, and then build the full financial model from observed reality rather than assumption.</p>
+    </div>
+
+    <div class="colophon">
+      <span>CONFIDENTIAL // DECISION MEMO</span>
+      <span>FINANCIALS TO BE UPDATED THROUGH DILIGENCE</span>
+      <span>APRIL 2026</span>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: document.querySelector('.tab-nav').offsetTop, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
